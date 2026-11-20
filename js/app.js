@@ -52,9 +52,12 @@
   function openCrop(cropId) {
     const crop=byId.get(cropId); if (!crop) return;
     const iconBg=`background:${crop.color}22`;
-    const fields=[['الموسم الزراعي',crop.season==='غير محدد'?'غير محدد في النص':crop.season],['الظروف المناخية',crop.climate],['التربة',crop.soil],['المياه',crop.water],['الأهمية',crop.importance],['المناطق المذكورة',crop.places]];
+    const missing=/غير محدد في النص|لا يورد الفصل وصفاً محدداً|لا يحدد الفصل نوع|لا يحدد الفصل وصفاً نوعياً|لا يحدد الفصل المحافظات|لا يحدد الفصل المناطق\.?$|لا يورد الفصل رقماً|لا يورد قيماً|لا يذكر احتياجاً|لا يذكر احتياجات مائية/;
+    const fields=[['الموسم الزراعي',crop.season],['الظروف المناخية',crop.climate],['التربة',crop.soil],['المياه',crop.water],['الأهمية',crop.importance],['المناطق المذكورة',crop.places]].filter(([label,value])=>value&&value!=='غير محدد'&&!missing.test(value));
     const varieties=crop.varieties?.length?`<div class="variety-list"><strong>أصناف الرز المذكورة</strong>${crop.varieties.map(item=>`<span>${escapeHTML(item)}</span>`).join('')}</div>`:'';
-    $('#dialog-content').innerHTML=`<div class="dialog-hero"><span class="dialog-icon" style="${iconBg}">${crop.icon}</span><div><span class="section-kicker">${escapeHTML(crop.category)}</span><h2 id="dialog-title">${escapeHTML(crop.name)}</h2></div></div><p class="dialog-summary">${escapeHTML(crop.description)}</p><div class="detail-grid">${fields.map(([label,value])=>`<div class="detail-cell"><small>${escapeHTML(label)}</small><strong>${escapeHTML(value)}</strong></div>`).join('')}</div>${varieties}<p class="dialog-tip"><strong>ملاحظة تعليمية:</strong> ${escapeHTML(crop.tip)}</p><p class="dialog-source">المصدر: ${escapeHTML(crop.source)}</p>`;
+    const update=content.cropUpdates?.[crop.id];
+    const updateHTML=update?`<section class="crop-update"><span class="source-badge">بيانات إضافية · ${escapeHTML(update.label)}</span><strong class="crop-update-value">${escapeHTML(update.value)}</strong><p>${escapeHTML(update.scope)}</p><a href="${update.url}" target="_blank" rel="noreferrer">${escapeHTML(update.source)} ↗</a></section>`:'';
+    $('#dialog-content').innerHTML=`<div class="dialog-hero"><span class="dialog-icon" style="${iconBg}">${crop.icon}</span><div><span class="section-kicker">${escapeHTML(crop.category)}</span><h2 id="dialog-title">${escapeHTML(crop.name)}</h2></div></div><p class="dialog-summary">${escapeHTML(crop.description)}</p><div class="detail-grid">${fields.map(([label,value])=>`<div class="detail-cell"><small>${escapeHTML(label)}</small><strong>${escapeHTML(value)}</strong></div>`).join('')}</div>${updateHTML}${varieties}<p class="dialog-tip"><strong>ملاحظة تعليمية:</strong> ${escapeHTML(crop.tip)}</p><p class="dialog-source">${fields.length<6?'نظهر فقط التفاصيل المسندة إلى المرجع، ولا نعرض الحقول التي لم يحددها. ':''}المصدر الدراسي: ${escapeHTML(crop.source)}</p>`;
     const dialog=$('#crop-dialog'); if (typeof dialog.showModal==='function') dialog.showModal(); else dialog.setAttribute('open','');
     addVisited('crops');
   }
@@ -105,8 +108,22 @@
   }
   function updateMapHighlight() {
     const cropId=$('#map-crop-select').value,crop=byId.get(cropId);
+    const production=content.governorateProduction?.[cropId],values=production?.values||{},numericValues=Object.values(values),maxValue=Math.max(1,...numericValues),minPositive=Math.min(...numericValues.filter(value=>value>0));
+    const hasProduction=Boolean(production);
+    $('#map-legend-label-1').textContent=hasProduction?`إنتاج ${production.year} · أغمق يعني أكثر`:'ورد اسمها مع المحصول في الكتاب';
+    $('#map-legend-label-2').textContent=hasProduction?'صفر مسجل أو خارج نطاق المسح':'لا توجد إشارة محددة في النص';
+    $('#map-legend-dot-1').classList.toggle('legend-production',hasProduction);
+    $('#map-legend-dot-2').classList.toggle('legend-neutral',true);
     $$('.map-shape').forEach(shape=>{
-      shape.classList.toggle('is-mentioned',Boolean(crop?.mapGov.includes(shape.dataset.gov)));
+      const covered=hasProduction&&Object.hasOwn(values,shape.dataset.gov),value=covered?values[shape.dataset.gov]:null;
+      shape.classList.toggle('is-mentioned',!hasProduction&&Boolean(crop?.mapGov.includes(shape.dataset.gov)));
+      shape.classList.toggle('is-stat',Boolean(covered&&value>0));
+      shape.classList.toggle('is-stat-zero',Boolean(covered&&value===0));
+      shape.classList.toggle('is-stat-missing',Boolean(hasProduction&&!covered));
+      if(shape.dataset.gov===selectedGov)shape.style.fill='#cd9453';
+      else if(covered&&value>0){const intensity=(Math.log(value)-Math.log(minPositive))/(Math.log(maxValue)-Math.log(minPositive)||1);shape.style.fill=`hsl(${103-35*intensity} ${24+20*intensity}% ${88-48*intensity}%)`;}
+      else shape.style.fill='';
+      shape.setAttribute('aria-label',`محافظة ${govById.get(shape.dataset.gov)?.ar||''}${covered?`: ${digits(value.toLocaleString('en-US'))} ${production.unit} في ${digits(production.year)}`:hasProduction?' — لا تتوفر قيمة لها في نطاق هذا التقرير':''}`);
       shape.classList.toggle('is-selected',shape.dataset.gov===selectedGov);
     });
     const selected=govById.get(selectedGov);
@@ -115,10 +132,15 @@
       const crops=content.crops.filter(item=>item.mapGov.includes(selected.id));
       const list=$('#gov-crop-notes');
       if(cropId!=='all') {
-        const exact=crop?.mapGov.includes(selected.id),region=crop?.mapApprox;
-        list.innerHTML=`<div class="gov-crop-item ${exact?'':'muted'}">${exact?escapeHTML(crop.name+' — '+crop.mapNote):escapeHTML('هذا النص لا يسمّي '+selected.ar+' ضمن المواضع المحددة لـ '+(crop?.name||'هذا المحصول')+'. وهذا لا يعني عدم زراعته.')}</div>`;
-        if(region&&exact) list.innerHTML+=`<div class="gov-crop-item muted">التظليل للوسط والجنوب تقريب إقليمي مبني على الوصف، وليس تصنيفاً إحصائياً للمحافظة.</div>`;
-        $('#gov-context').textContent=crop?.source||'';
+        const exact=crop?.mapGov.includes(selected.id),region=crop?.mapApprox,covered=hasProduction&&Object.hasOwn(values,selected.id);
+        if(hasProduction){
+          list.innerHTML=covered?`<div class="gov-crop-item">إنتاج ${escapeHTML(crop?.name||'المحصول')} في ${digits(production.year)}: <strong>${digits(values[selected.id].toLocaleString('en-US'))} ${escapeHTML(production.unit)}</strong></div>`:`<div class="gov-crop-item muted">لا تتوفر قيمة لهذه المحافظة ضمن نطاق التقرير.</div>`;
+          $('#gov-context').textContent=`${production.source}. ${production.scope}`;
+        } else {
+          list.innerHTML=`<div class="gov-crop-item ${exact?'':'muted'}">${exact?escapeHTML(crop.name+' — '+crop.mapNote):escapeHTML('هذا النص لا يسمّي '+selected.ar+' ضمن المواضع المحددة لـ '+(crop?.name||'هذا المحصول')+'. وهذا لا يعني عدم زراعته.')}</div>`;
+          if(region&&exact) list.innerHTML+=`<div class="gov-crop-item muted">التظليل للوسط والجنوب تقريب إقليمي مبني على الوصف، وليس تصنيفاً إحصائياً للمحافظة.</div>`;
+          $('#gov-context').textContent=crop?.source||'';
+        }
       } else {
         list.innerHTML=crops.length?crops.slice(0,5).map(item=>`<div class="gov-crop-item">${escapeHTML(item.name)} — ${escapeHTML(item.mapNote)}</div>`).join(''):'<div class="gov-crop-item muted">لا يحدد الفصل محصولاً لمحافظة بعينها في الإشارات المسجلة.</div>';
         $('#gov-context').textContent='تظهر هنا الأسماء الجغرافية المحددة صراحة في فصل الزراعة؛ الإشارات إلى مناطق عامة لا تُحوّل إلى ترتيب إنتاج.';
@@ -159,16 +181,19 @@
       reasons.push(soil?'التربة الرسوبية ترد ضمن عوامل انتشار النخيل.':'يذكر الفصل جودة التربة الرسوبية ضمن عوامل انتشار النخيل.');
       reasons.push(water?'توفر الري يتفق مع وصف النخيل قرب الأنهار.':'راجع توفر المياه؛ يربط الفصل انتشار النخيل بمياه الري.');
       reasons.push(temp?'الإعداد الدافئ ينسجم نوعياً مع وصف المناخ المشمس الجاف والحرارة المرتفعة.':'الفصل يذكر مناخاً مشمساً جافاً وحرارة مرتفعة، دون عتبة رقمية.');
-    } else return {scored:false,score:0,reasons:['لا يقدم الفصل شروطاً كافية لهذا المحصول حتى نعطيه مؤشراً موثوقاً.','غيّر المحصول إلى القمح أو الرز أو زهرة الشمس أو النخيل لرؤية العلاقات التي يصفها الكتاب.']};
+    } else {
+      const supported=[crop.season&&crop.season!=='غير محدد'?`يصنف المرجع ${crop.name} محصولاً ${crop.season==='شتوي'?'شتوياً':crop.season==='صيفي'?'صيفياً':'موسمياً'}.`:null,crop.importance,crop.places,crop.water,crop.soil].filter(value=>value&&!/غير محدد|لا يحدد الفصل|لا يورد الفصل|لا يذكر احتياجاً|لا يذكر احتياجات/.test(value));
+      return {scored:false,score:0,reasons:[...supported.slice(0,3),'المقابض تغيّر ظروف النشاط، لكن لا نحسب توافقاً رقمياً لهذا المحصول من دون بيانات موثقة كافية.']};
+    }
     return {scored,score:Math.min(100,score),reasons};
   }
   function runSimulation(){
     const crop=byId.get($('#sim-crop').value);if(!crop)return;
     const values={soil:$('#sim-soil').value,water:numberFromSlider($('#sim-water').value),temp:numberFromSlider($('#sim-temperature').value),salinity:numberFromSlider($('#sim-salinity').value)};
     state.sim={crop:crop.id,soil:values.soil,water:values.water,temp:values.temp,salinity:values.salinity};save();
-    const result=simRules(crop,values);$('#sim-crop-icon').textContent=crop.icon;$('#sim-result-title').textContent=result.scored?'ماذا تقول هذه الظروف عن '+crop.name+'؟':'المصدر لا يكفي لإعطاء مؤشر';$('#sim-meter-fill').style.width=`${result.score}%`;
-    $('#sim-fit-label').textContent=result.scored?(result.score>=75?'توافق أوضح':result.score>=48?'توافق جزئي':'تحتاج مراجعة'):'غير محسوب';
-    $('#sim-explanation').textContent=result.scored?`مؤشر تعليمي: ${digits(result.score)}٪. يوضح فقط مدى توافق اختياراتك مع الصفات النوعية المسجلة في الفصل، ولا يمثل فرصة نجاح أو إنتاجاً.`:'هذا المحصول مفيد للاستكشاف، لكن لم تُسجل في الفصل صفات كافية لتقييم هذه العوامل. لا نملأ النقص بتخمين زراعي.';
+    const result=simRules(crop,values);$('#sim-crop-icon').textContent=crop.icon;$('#sim-result-title').textContent=result.scored?'ماذا تقول هذه الظروف عن '+crop.name+'؟':'استكشف ما نعرفه عن '+crop.name;$('#sim-meter-fill').style.width=`${result.score}%`;
+    $('#sim-fit-label').textContent=result.scored?(result.score>=75?'توافق أوضح':result.score>=48?'توافق جزئي':'تحتاج مراجعة'):'معلومات موثقة';
+    $('#sim-explanation').textContent=result.scored?`مؤشر تعليمي: ${digits(result.score)}٪. يوضح فقط مدى توافق اختياراتك مع الصفات النوعية المسجلة في الفصل، ولا يمثل فرصة نجاح أو إنتاجاً.`:'لا تتوفر للمحصول هنا مدخلات موثقة تكفي لحساب مؤشر؛ لذلك يعرض النشاط حقائق المرجع بدلاً من نتيجة رقمية. هذه الحقول ليست تقديراً زراعياً.';
     $('#sim-reasons').innerHTML=result.reasons.map((reason,index)=>`<span>${digits(index+1)}</span><span>${escapeHTML(reason)}</span>`).join('');
     if(result.scored)addVisited('farm');
   }
@@ -197,6 +222,7 @@
   function renderFacts(){
     const maxima={};content.facts.forEach(item=>maxima[item.unit]=Math.max(maxima[item.unit]||0,item.value));
     $('#facts-grid').innerHTML=content.facts.map(fact=>{const width=Math.max(8,Math.round(fact.value/maxima[fact.unit]*100));return `<article class="fact-card"><div class="fact-head"><span>${escapeHTML(fact.crop)}</span><span class="fact-year">${digits(fact.year)}</span></div><div class="fact-value">${digits(fact.value.toLocaleString('en-US'))}<small>${escapeHTML(fact.unit)}</small></div><p class="fact-note">${escapeHTML(fact.note)}</p><div class="fact-bar" aria-hidden="true"><span style="width:${width}%;background:${fact.color}"></span></div></article>`;}).join('');
+    $('#current-data-groups').innerHTML=content.currentData.groups.map(group=>`<section class="current-data-group"><div class="current-group-head"><div><span class="source-badge">${escapeHTML(group.tag)}</span><h3>${escapeHTML(group.title)}</h3></div><p>${escapeHTML(group.source)}</p></div><div class="current-data-grid">${group.items.map(item=>`<article class="current-data-card"><span>${escapeHTML(item.label)}</span><strong>${digits(item.value)}<small>${escapeHTML(item.unit)}</small></strong><p>${escapeHTML(item.note)}</p></article>`).join('')}</div></section>`).join('');
   }
   function renderProblems(){ $('#problem-list').innerHTML=content.problems.map(item=>`<article class="problem-item"><span class="problem-icon" aria-hidden="true">${item.icon}</span><div><h3>${escapeHTML(item.title)}</h3><p>${escapeHTML(item.text)}</p></div></article>`).join(''); }
   function renderSeasons(){ $('#season-board').innerHTML=content.seasons.map(item=>`<article class="season-card ${item.tone}"><div class="season-card-top"><span class="season-symbol" aria-hidden="true">${item.icon}</span><h3>${escapeHTML(item.title)}</h3></div><p>${escapeHTML(item.note)}</p><div class="season-crops">${item.items.map(name=>`<span>${escapeHTML(name)}</span>`).join('')}</div></article>`).join(''); }

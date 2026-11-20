@@ -66,7 +66,7 @@
 
     <section class="content-section section-shell" id="map-section" aria-labelledby="map-title">
       <div class="section-heading">
-        <div><span class="section-kicker">02 / الجغرافيا الزراعية</span><h2 id="map-title">الأرض ترسم ملامح المحصول</h2><p>اختر محصولاً لتعرف أين يذكره الكتاب. غياب التلوين لا يعني أن المحصول لا يُزرع هناك.</p></div>
+        <div><span class="section-kicker">02 / الجغرافيا الزراعية</span><h2 id="map-title">الأرض ترسم ملامح المحصول</h2><p>اختر محصولاً لعرض مواضعه في الكتاب أو أرقام الإنتاج الرسمية المنشورة للمحافظات. غياب البيانات لا يعني عدم الزراعة.</p></div>
         <div class="map-filter"><label for="map-crop-select">اعرض الإشارات إلى</label><select id="map-crop-select" aria-label="اختر محصولاً للخريطة"></select></div>
       </div>
       <div class="map-vintage-alert" role="note"><span aria-hidden="true">ⓘ</span><p><strong>تنبيه جغرافي:</strong> هذه الحدود تمثل طبقة المحافظات المنشورة لعام 2022 (18 وحدة). استُحدثت محافظة حلبجة عام 2025، لكن ملف الحدود المفتوح المستخدم لم يُحدّث ليعرض حدها الجديد؛ لذلك تعرض الخريطة حدود المصدر المؤرخة فقط ولا ترسم خطاً تخمينياً.</p></div>
@@ -74,7 +74,7 @@
         <div class="map-frame" id="map-frame">
           <div class="map-topline"><span class="map-live"><i></i> خريطة المحافظات</span><div class="map-tools"><button id="map-zoom-in" type="button" aria-label="تكبير الخريطة">＋</button><button id="map-zoom-out" type="button" aria-label="تصغير الخريطة">−</button><button id="map-reset" type="button" aria-label="إعادة ضبط الخريطة">⤾</button></div></div>
           <svg id="iraq-map" class="iraq-map" viewBox="0 0 520 700" role="group" aria-labelledby="map-svg-title map-svg-desc" tabindex="0"><title id="map-svg-title">خريطة المحافظات العراقية بحسب بيانات حدود 2022</title><desc id="map-svg-desc">خريطة تفاعلية. استخدم الفأرة أو لوحة المفاتيح لاختيار محافظة، أو أزرار التكبير والتصغير.</desc><g id="map-layer"></g></svg>
-          <div class="map-legend"><span><i class="legend-dot legend-mentioned"></i> ورد اسمها مع المحصول في الكتاب</span><span><i class="legend-dot legend-neutral"></i> لا توجد إشارة محددة في النص</span></div>
+          <div class="map-legend"><span><i class="legend-dot legend-mentioned" id="map-legend-dot-1"></i><span id="map-legend-label-1">ورد اسمها مع المحصول في الكتاب</span></span><span><i class="legend-dot legend-neutral" id="map-legend-dot-2"></i><span id="map-legend-label-2">لا توجد إشارة محددة في النص</span></span></div>
           <p class="map-source-line">الحدود: geoBoundaries ADM1 · إصدار هندسي يمثّل 2022 · ترخيص CC0 1.0</p>
         </div>
         <aside class="governorate-card" id="governorate-info" aria-live="polite">
@@ -141,8 +141,16 @@
       </div>
     </section>
 
+    <section class="data-section current-data-section" id="current-data-section" aria-labelledby="current-data-title">
+      <div class="section-shell">
+        <div class="section-heading"><div><span class="section-kicker">07 / تحديث موثق</span><h2 id="current-data-title">ماذا تقول أحدث الأرقام؟</h2><p>نفصل الإحصاء السنوي المنشور عن تقديرات الموسم والتوقعات حتى لا تختلط طرق القياس.</p></div><span class="historical-stamp current-stamp">مصادر خارجية<br><strong>2025 — 2026</strong></span></div>
+        <div class="current-data-groups" id="current-data-groups"></div>
+        <p class="data-caveat"><span>!</span> أرقام 2025 في تقرير المحاصيل الشتوية تقديرات للقطاع الخاص ضمن نطاق مسح محدد، ولا تشمل إقليم كردستان وبعض القرى. أرقام FAO لعام 2026 توقعات مستقلة وليست نتائج نهائية؛ لا تُقارن مباشرةً بتقديرات الكتاب التاريخية.</p>
+      </div>
+    </section>
+
     <section class="content-section section-shell" id="livestock-section" aria-labelledby="livestock-title">
-      <div class="section-heading"><div><span class="section-kicker">07 / منظومة مترابطة</span><h2 id="livestock-title">من الحقل إلى الثروة الحيوانية</h2><p>الأعلاف والإنتاج الحيواني جزء من الصورة الزراعية التي يصفها الكتاب.</p></div></div>
+      <div class="section-heading"><div><span class="section-kicker">08 / منظومة مترابطة</span><h2 id="livestock-title">من الحقل إلى الثروة الحيوانية</h2><p>الأعلاف والإنتاج الحيواني جزء من الصورة الزراعية التي يصفها الكتاب.</p></div></div>
       <div class="livestock-grid">
         <article class="livestock-card livestock-main"><span class="livestock-icon">🐑</span><div><span class="card-label">موارد يعددها الفصل</span><h3>الثروة الحيوانية</h3><p>الأغنام والماعز والأبقار والجاموس والجمال والدواجن، إضافةً إلى الأسماك والنحل.</p></div><div class="animal-benefits"><span>غذاء للسكان</span><span>مواد أولية للصناعة</span><span>دخل للمزارعين</span><span>سماد عضوي</span></div></article>
         <article class="livestock-card"><span class="livestock-icon small">🌿</span><span class="card-label">محاصيل علف</span><h3>غذاء للحيوان</h3><p>يسمي الفصل الجت والبرسيم والتبن، ويذكر الاستفادة من سيقان الذرة وبذورها والسمسم والقصب.</p><a href="#crops-section" class="text-link">استكشف المحاصيل <span>↗</span></a></article>
@@ -151,19 +159,19 @@
     </section>
 
     <section class="problems-section" id="problems-section" aria-labelledby="problems-title">
-      <div class="section-shell problems-layout"><div class="problems-intro"><span class="section-kicker">08 / الواقع والتحديات</span><h2 id="problems-title">العقبات كما وردت في الفصل</h2><p>هذه خلاصة دراسية لمشكلات القطاع، وليست تقييماً حديثاً للحالة الراهنة.</p></div><div class="problem-list" id="problem-list"></div></div>
+      <div class="section-shell problems-layout"><div class="problems-intro"><span class="section-kicker">09 / الواقع والتحديات</span><h2 id="problems-title">العقبات كما وردت في الفصل</h2><p>هذه خلاصة دراسية لمشكلات القطاع، وليست تقييماً حديثاً للحالة الراهنة.</p></div><div class="problem-list" id="problem-list"></div></div>
     </section>
 
     <section class="content-section season-section" id="season-section" aria-labelledby="season-title">
       <div class="section-shell">
-        <div class="section-heading"><div><span class="section-kicker">09 / إيقاع الزراعة</span><h2 id="season-title">مواسم يذكرها الكتاب</h2><p>عرض موسمي بلا تواريخ شهرية مخمّنة؛ فالكتاب يحدد نوع الموسم لبعض المحاصيل ولا يعطي تقويماً تفصيلياً لكل محافظة.</p></div></div>
+        <div class="section-heading"><div><span class="section-kicker">10 / إيقاع الزراعة</span><h2 id="season-title">مواسم يذكرها الكتاب</h2><p>عرض موسمي بلا تواريخ شهرية مخمّنة؛ فالكتاب يحدد نوع الموسم لبعض المحاصيل ولا يعطي تقويماً تفصيلياً لكل محافظة.</p></div></div>
         <div class="season-board" id="season-board"></div>
         <div class="journey-wrap"><div class="journey-heading"><div><span class="section-kicker">من البذرة إلى الحصاد</span><h3>رحلة المحصول</h3></div><span id="journey-progress">٠ من ٥</span></div><div class="journey-track" id="journey-track"></div><p class="supplement-note">خطوات الرحلة مادة إثرائية عامة للتعرّف على دورة الزراعة؛ لا تُنسب تفاصيلها إلى فصل الكتاب.</p></div>
       </div>
     </section>
 
     <section class="quiz-section" id="learn-section" aria-labelledby="learn-title">
-      <div class="section-shell learn-header"><div><span class="section-kicker">10 / ثبّت ما تعلمته</span><h2 id="learn-title">تعلّم، جرّب، ثم اختبر</h2><p>أسئلة قصيرة من الفصل، مع تفسير للإجابة.</p></div><div class="quiz-total"><strong id="quiz-best">٠</strong><span>أفضل نتيجة</span></div></div>
+      <div class="section-shell learn-header"><div><span class="section-kicker">11 / ثبّت ما تعلمته</span><h2 id="learn-title">تعلّم، جرّب، ثم اختبر</h2><p>أسئلة قصيرة من الفصل، مع تفسير للإجابة.</p></div><div class="quiz-total"><strong id="quiz-best">٠</strong><span>أفضل نتيجة</span></div></div>
       <div class="section-shell learn-grid">
         <div class="quiz-card" id="quiz-section"><div class="quiz-meta"><span id="quiz-counter">السؤال ١ من ٥</span><span class="quiz-source">من الكتاب</span></div><div class="quiz-progress-track"><span id="quiz-progress-fill"></span></div><h3 id="quiz-question"></h3><div class="quiz-options" id="quiz-options"></div><div class="quiz-feedback" id="quiz-feedback" aria-live="polite" hidden></div><div class="quiz-footer"><span id="quiz-score-live">نتيجتك: ٠</span><button class="button button-dark" id="quiz-next" type="button" disabled>السؤال التالي <span>←</span></button></div></div>
         <aside class="glossary-card" id="glossary-section"><span class="section-kicker">قاموس صغير</span><h3>مصطلحات من الفصل</h3><label class="glossary-search"><span>⌕</span><input id="glossary-search" type="search" placeholder="ابحث عن مصطلح"></label><div class="glossary-list" id="glossary-list"></div></aside>
@@ -172,10 +180,12 @@
     </section>
 
     <section class="sources-section" id="sources-section" aria-labelledby="sources-title">
-      <div class="section-shell sources-layout"><div><span class="section-kicker">11 / أمانة المصدر</span><h2 id="sources-title">المعلومة لها سند</h2><p>نميّز بين ما في الكتاب والبيانات الإضافية حتى تعرف من أين جاءت كل ملاحظة.</p></div><div class="source-cards">
-        <article class="source-card"><span class="source-number">A</span><div><h3>الكتاب المدرسي</h3><p>كتاب الاجتماعيات للصف الثالث المتوسط العراقي، فصل الزراعة، الصفحات المطبوعة 50–57. كل محتوى الموسوعة الدراسي مُلخص من هذا الفصل.</p><span class="source-badge">المرجع الدراسي</span></div></article>
+      <div class="section-shell sources-layout"><div><span class="section-kicker">12 / أمانة المصدر</span><h2 id="sources-title">المعلومة لها سند</h2><p>نميّز بين ما في الكتاب والبيانات الإضافية حتى تعرف من أين جاءت كل ملاحظة.</p></div><div class="source-cards">
+        <article class="source-card"><span class="source-number">A</span><div><h3>الكتاب المدرسي</h3><p>كتاب الاجتماعيات للصف الثالث المتوسط العراقي، فصل الزراعة، الصفحات المطبوعة 50–57. المحتوى الدراسي ملخص من هذا الفصل، وتظهر الإضافات الإحصائية بوسم ومصدر منفصلين.</p><span class="source-badge">المرجع الدراسي</span></div></article>
         <article class="source-card"><span class="source-number">B</span><div><h3>بيانات الحدود</h3><p>geoBoundaries، العراق ADM1، الإصدار الذي يمثل 2022، 18 وحدة، CC0 1.0. مصدر الهندسة: <a href="https://www.geoboundaries.org/api/current/gbOpen/IRQ/ADM1/" target="_blank" rel="noreferrer">بيانات API</a>. لا تمثل هذه النسخة حدود حلبجة المستحدثة لاحقاً.</p><span class="source-badge source-badge-muted">حدود تاريخية — تحتاج تحديثاً</span></div></article>
-        <article class="source-card"><span class="source-number">C</span><div><h3>تحديث إداري رسمي</h3><p>وزارة العدل العراقية أعلنت نشر المرسوم الجمهوري رقم 21 لسنة 2025 باستحداث محافظة حلبجة بوصفها المحافظة التاسعة عشرة. لم نرسم حدودها من دون ملف جغرافي محدث. <a href="https://www.moj.gov.iq/view.9251/" target="_blank" rel="noreferrer">بيان وزارة العدل ↗</a></p><span class="source-badge source-badge-muted">مرجع قانوني حديث</span></div></article>
+        <article class="source-card"><span class="source-number">C</span><div><h3>إحصاءات الجهاز المركزي للإحصاء</h3><p>تقرير المحاصيل الشتوية لموسم 2025 (حنطة وشعير) منشور ضمن تقارير الجهاز المركزي للإحصاء، وتفاصيل النطاق الجغرافي موضحة في بطاقات البيانات. <a href="https://www.cosit.gov.iq/index.php/ar/agri-stat/veg-prod" target="_blank" rel="noreferrer">تقارير الإنتاج الزراعي ↗</a> · <a href="https://www.cosit.gov.iq/ar/agri-ind" target="_blank" rel="noreferrer">المؤشرات الزراعية ↗</a></p><span class="source-badge">مصدر حكومي عراقي</span></div></article>
+        <article class="source-card"><span class="source-number">D</span><div><h3>نشرة منظمة الأغذية والزراعة (FAO)</h3><p>موجز العراق لدى نظام الإنذار المبكر العالمي للمعلومات الزراعية والغذائية يعرض ظروف الموسم وتوقعات 2026، وهي تقديرات مستقلة عن مسح الجهاز المركزي لعام 2025. <a href="https://www.fao.org/giews/countrybrief/country.jsp?code=IRQ" target="_blank" rel="noreferrer">موجز العراق لدى FAO ↗</a></p><span class="source-badge source-badge-muted">توقعات موسم 2026</span></div></article>
+        <article class="source-card"><span class="source-number">E</span><div><h3>تحديث إداري رسمي</h3><p>وزارة العدل العراقية أعلنت نشر المرسوم الجمهوري رقم 21 لسنة 2025 باستحداث محافظة حلبجة بوصفها المحافظة التاسعة عشرة. لم نرسم حدودها من دون ملف جغرافي محدث. <a href="https://www.moj.gov.iq/view.9251/" target="_blank" rel="noreferrer">بيان وزارة العدل ↗</a></p><span class="source-badge source-badge-muted">مرجع قانوني حديث</span></div></article>
       </div></div>
     </section>
   </main>
