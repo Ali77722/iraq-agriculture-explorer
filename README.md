@@ -47,10 +47,10 @@ docs/QA.md                   قائمة التحقق ونتائج الاختبا
 
 ## GitHub Pages
 
-بعد رفع الفرع `main` إلى مستودع GitHub، فعّل **Settings → Pages → Build and deployment → Source: GitHub Actions** مرة واحدة. سيرفع ملف `.github/workflows/pages.yml` الموقع تلقائياً مع كل دفع إلى `main`. يفترض أن تكون `index.html` في جذر المستودع، وجميع مسارات الأصول نسبية لتعمل تحت مسار المشروع.
+الموقع منشور على [GitHub Pages](https://ali77722.github.io/iraq-agriculture-explorer/) من المستودع العام [Ali77722/iraq-agriculture-explorer](https://github.com/Ali77722/iraq-agriculture-explorer). مصدر النشر GitHub Actions، ويعيد `.github/workflows/pages.yml` بناء الصفحة مع كل تحديث إلى `main`.
 
 ## الاستعادة والإصدارات
 
 - استعد نقطة مستقرة باستخدام `git checkout phase-1-complete` أو checkout لوسم إصدار أحدث.
-- نسخة ZIP مستقلة لنقطة التأسيس محفوظة في `/tmp/iraq-agriculture-explorer-phase-1.zip`؛ يُنشأ أرشيف جديد لكل مرحلة مستقرة. احتفظ بنسخة خارجه قبل تنظيف `/tmp`.
+- أرشيف الإصدار النهائي محفوظ في `/tmp/iraq-agriculture-explorer-v1.0.0.zip`، وأرشيف التأسيس في `/tmp/iraq-agriculture-explorer-phase-1.zip`. احتفظ بنسخة خارجه قبل تنظيف `/tmp`.
 - راجع `docs/PHASES.md` لسجل commits/وسوم المراحل و`docs/QA.md` لفحوص الموقع.
