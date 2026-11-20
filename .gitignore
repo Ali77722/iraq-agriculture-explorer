@@ -1,0 +1,20 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary and generated files
+*.tmp
+*.log
+*.zip
+coverage/
+dist/
+node_modules/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*secret*
+*token*

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173b2d">
+  <meta name="description" content="منصة تعليمية تفاعلية لاستكشاف الزراعة في العراق من خلال كتاب الاجتماعيات للصف الثالث المتوسط.">
+  <title>Iraq Agriculture Explorer | المستكشف الزراعي للعراق</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="data/governorates.js" defer></script>
+  <script src="data/content.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#home" aria-label="المستكشف الزراعي للعراق، الرئيسية">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M38 8C20 8 9 16 9 29c0 7 5 11 11 11 13 0 19-14 18-32Z"/><path d="M9 40c6-10 13-15 24-22"/></svg></span>
+        <span><strong>Iraq Agriculture</strong><small>المستكشف الزراعي للعراق</small></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="فتح قائمة التنقل"><span></span><span></span></button>
+      <nav class="primary-nav" id="primary-nav" aria-label="التنقل الرئيسي">
+        <a href="#home" class="nav-link is-active">الرئيسية</a>
+        <a href="#map-section" class="nav-link">الخريطة</a>
+        <a href="#crops-section" class="nav-link">موسوعة المحاصيل</a>
+        <a href="#farm-section" class="nav-link">المزرعة الافتراضية</a>
+        <a href="#lab-section" class="nav-link">مختبر القرارات</a>
+        <a href="#learn-section" class="nav-link">تعلّم واختبر</a>
+      </nav>
+      <button class="progress-pill" id="progress-open" type="button" title="عرض تقدمك"><span class="progress-dot"></span><span id="progress-label">بداية الرحلة</span></button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero-section section-shell" id="home" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-icon">✳</span> نتعلّم من أرض الرافدين</p>
+        <h1 id="hero-title">كل محصول<br><span>يحكي حكاية مكان.</span></h1>
+        <p class="hero-lede">اكتشف كيف تتوزع الزراعة في العراق، وما الذي تحتاجه المحاصيل، وكيف تتصل الأرض بالماء والغذاء وحياة الناس.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#map-section">ابدأ الاستكشاف <span aria-hidden="true">←</span></a>
+          <a class="button button-quiet" href="#crops-section">تصفّح الموسوعة</a>
+        </div>
+        <div class="hero-note"><span class="note-check" aria-hidden="true">✓</span><span>المصدر الدراسي: كتاب الاجتماعيات للصف الثالث المتوسط<br><strong>المعلومات والأرقام تُعرض مع مصدرها وسنتها.</strong></span></div>
+      </div>
+      <div class="hero-art" aria-label="رسم توضيحي لحقول ومجرى ماء ونخلة">
+        <div class="art-sun"></div><div class="art-hill art-hill-back"></div><div class="art-hill art-hill-front"></div>
+        <div class="art-river"></div><div class="art-field field-one"></div><div class="art-field field-two"></div>
+        <div class="art-palm palm-one"><i></i><b></b></div><div class="art-palm palm-two"><i></i><b></b></div>
+        <div class="art-card"><span class="art-card-icon">🌾</span><span><small>من الحقل إلى المائدة</small><strong>رحلة زراعية تفاعلية</strong></span><span class="art-arrow">↗</span></div>
+        <div class="art-caption"><span class="caption-line"></span> بلاد الرافدين · أرضٌ وماءٌ وحكاية</div>
+      </div>
+      <div class="hero-bottom"><span>استكشف حسب اهتمامك</span><div class="quick-links"><a href="#map-section">المحافظات <b>↗</b></a><a href="#farm-section">جرّب المحاكاة <b>↗</b></a><a href="#quiz-section">اختبر معلوماتك <b>↗</b></a></div></div>
+    </section>
+
+    <section class="intro-band" aria-label="نظرة على الزراعة العراقية">
+      <div class="section-shell intro-inner">
+        <div class="intro-title"><span class="section-kicker">01 / الصورة الكبيرة</span><h2>الزراعة أكثر من محصول.</h2></div>
+        <p>في الكتاب، ترتبط الزراعة بالأمن الغذائي ودخل الفلاحين والأعلاف والمواد الأولية للصناعة. افتح الأقسام لتتبع هذه الروابط من المنطقة إلى المحصول.</p>
+        <div class="intro-stat"><strong>3</strong><span>أقسام رئيسية<br>للمحاصيل في الكتاب</span></div>
+        <div class="intro-stat"><strong>2018<small>–19</small></strong><span>سنوات التقديرات التاريخية<br>المذكورة في الفصل</span></div>
+      </div>
+    </section>
+
+    <section class="content-section section-shell" id="map-section" aria-labelledby="map-title">
+      <div class="section-heading">
+        <div><span class="section-kicker">02 / الجغرافيا الزراعية</span><h2 id="map-title">الأرض ترسم ملامح المحصول</h2><p>اختر محصولاً لتعرف أين يذكره الكتاب. غياب التلوين لا يعني أن المحصول لا يُزرع هناك.</p></div>
+        <div class="map-filter"><label for="map-crop-select">اعرض الإشارات إلى</label><select id="map-crop-select" aria-label="اختر محصولاً للخريطة"></select></div>
+      </div>
+      <div class="map-vintage-alert" role="note"><span aria-hidden="true">ⓘ</span><p><strong>تنبيه جغرافي:</strong> هذه الحدود تمثل طبقة المحافظات المنشورة لعام 2022 (18 وحدة). استُحدثت محافظة حلبجة عام 2025، لكن ملف الحدود المفتوح المستخدم لم يُحدّث ليعرض حدها الجديد؛ لذلك تعرض الخريطة حدود المصدر المؤرخة فقط ولا ترسم خطاً تخمينياً.</p></div>
+      <div class="map-layout">
+        <div class="map-frame" id="map-frame">
+          <div class="map-topline"><span class="map-live"><i></i> خريطة المحافظات</span><div class="map-tools"><button id="map-zoom-in" type="button" aria-label="تكبير الخريطة">＋</button><button id="map-zoom-out" type="button" aria-label="تصغير الخريطة">−</button><button id="map-reset" type="button" aria-label="إعادة ضبط الخريطة">⤾</button></div></div>
+          <svg id="iraq-map" class="iraq-map" viewBox="0 0 520 700" role="group" aria-labelledby="map-svg-title map-svg-desc" tabindex="0"><title id="map-svg-title">خريطة المحافظات العراقية بحسب بيانات حدود 2022</title><desc id="map-svg-desc">خريطة تفاعلية. استخدم الفأرة أو لوحة المفاتيح لاختيار محافظة، أو أزرار التكبير والتصغير.</desc><g id="map-layer"></g></svg>
+          <div class="map-legend"><span><i class="legend-dot legend-mentioned"></i> ورد اسمها مع المحصول في الكتاب</span><span><i class="legend-dot legend-neutral"></i> لا توجد إشارة محددة في النص</span></div>
+          <p class="map-source-line">الحدود: geoBoundaries ADM1 · إصدار هندسي يمثّل 2022 · ترخيص CC0 1.0</p>
+        </div>
+        <aside class="governorate-card" id="governorate-info" aria-live="polite">
+          <div class="card-top-label"><span id="gov-index">دليل الخريطة</span><span class="pin-icon">⌖</span></div>
+          <div class="gov-placeholder" id="gov-placeholder"><span class="placeholder-icon">⌖</span><h3>اختر محافظة</h3><p>اضغط على مساحة من الخريطة لتظهر الإشارات الزراعية التي يذكرها الكتاب عنها.</p><div class="mini-rule"></div><small>لا ننسب للمحافظة محاصيل لم يذكرها المصدر.</small></div>
+          <div class="gov-details" id="gov-details" hidden><h3 id="gov-name"></h3><p class="gov-english" id="gov-english"></p><div class="gov-crops-label">إشارات المحصول المختار</div><div id="gov-crop-notes" class="gov-crop-notes"></div><p id="gov-context" class="gov-context"></p></div>
+          <div class="map-count"><span class="count-number">18</span><span>وحدة إدارية<br><small>حسب نسخة الحدود 2022</small></span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="content-section crops-section" id="crops-section" aria-labelledby="crops-title">
+      <div class="section-shell">
+        <div class="section-heading">
+          <div><span class="section-kicker">03 / دليل المحاصيل</span><h2 id="crops-title">من القمح إلى النخيل</h2><p>بطاقات قصيرة قابلة للبحث. افتح أي محصول لرؤية ما يسنده المصدر وما لا يذكره.</p></div>
+          <a class="text-link" href="#sources-section">كيف نتحقق من المعلومات؟ <span>↗</span></a>
+        </div>
+        <div class="crop-controls">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="crop-search" type="search" placeholder="ابحث عن محصول…" autocomplete="off"><kbd>/</kbd></label>
+          <label class="filter-select"><span>التصنيف</span><select id="crop-category"><option value="all">كل المحاصيل</option></select></label>
+          <label class="filter-select"><span>الموسم</span><select id="crop-season"><option value="all">كل المواسم</option><option value="شتوي">شتوي</option><option value="صيفي">صيفي</option><option value="غير محدد">غير محدد في النص</option></select></label>
+          <label class="filter-select"><span>المحافظة المذكورة</span><select id="crop-governorate"><option value="all">كل المحافظات</option></select></label>
+          <button class="clear-filters" id="clear-crop-filters" type="button">مسح</button>
+        </div>
+        <div class="results-bar"><span id="crop-results-count" aria-live="polite"></span><span class="source-tag"><i></i> محتوى الفصل الدراسي</span></div>
+        <div class="crop-grid" id="crop-grid"></div>
+        <div class="empty-state" id="crop-empty" hidden><span>⌕</span><h3>لم نجد محصولاً بهذا الوصف</h3><p>غيّر عبارة البحث أو امسح عوامل التصفية.</p><button class="button button-outline" id="empty-clear" type="button">عرض كل المحاصيل</button></div>
+      </div>
+    </section>
+
+    <section class="simulation-section" id="farm-section" aria-labelledby="farm-title">
+      <div class="section-shell">
+        <div class="section-heading light-heading"><div><span class="section-kicker">04 / تعلّم بالتجربة</span><h2 id="farm-title">المزرعة الافتراضية</h2><p>غيّر الظروف ولاحظ كيف ترتبط بصفات يذكرها الكتاب عن المحصول.</p></div><span class="simulation-badge">نشاط تعليمي مبسّط</span></div>
+        <div class="sim-layout">
+          <div class="sim-controls-panel">
+            <label class="sim-field"><span>اختر المحصول</span><select id="sim-crop"></select></label>
+            <label class="sim-field"><span>نوع التربة</span><select id="sim-soil"><option value="mixed">مزيجية جيدة الصرف</option><option value="alluvial">رسوبية</option><option value="sandy">رملية</option><option value="salty">مالحة</option><option value="unknown">نوع غير محدد</option></select></label>
+            <div class="range-field"><div><label for="sim-water">توفر المياه</label><output id="water-output">متوسط</output></div><input id="sim-water" type="range" min="0" max="100" value="55"><div class="range-labels"><span>شحيح</span><span>وفير</span></div></div>
+            <div class="range-field"><div><label for="sim-temperature">درجة الحرارة</label><output id="temperature-output">معتدلة</output></div><input id="sim-temperature" type="range" min="5" max="45" value="27"><div class="range-labels"><span>أبرد</span><span>أدفأ</span></div></div>
+            <div class="range-field"><div><label for="sim-salinity">ملوحة التربة</label><output id="salinity-output">منخفضة</output></div><input id="sim-salinity" type="range" min="0" max="100" value="18"><div class="range-labels"><span>منخفضة</span><span>مرتفعة</span></div></div>
+            <button class="button button-cream sim-run" id="run-simulation" type="button">حلّل ظروف المزرعة <span>←</span></button>
+          </div>
+          <div class="sim-result-panel" aria-live="polite">
+            <div class="sim-result-top"><div><span class="result-eyebrow">قراءة الظروف</span><h3 id="sim-result-title">اختر محصولاً وابدأ التجربة</h3></div><span class="result-crop-icon" id="sim-crop-icon">🌱</span></div>
+            <div class="fit-meter"><div class="meter-track"><span id="sim-meter-fill"></span></div><div class="meter-scale"><span>تحتاج مراجعة</span><span id="sim-fit-label">بانتظار اختيارك</span><span>توافق أوضح</span></div></div>
+            <p class="sim-explanation" id="sim-explanation">ستقرأ النتيجة علاقة نوعية بين اختياراتك والصفات المذكورة في الفصل، لا توقعاً بكمية المحصول.</p>
+            <div class="sim-reasons" id="sim-reasons"><span>①</span><span>المعلومة المحددة ستظهر هنا بعد التحليل.</span></div>
+            <p class="sim-disclaimer">مؤشر النشاط لعبة تعليمية مبسّطة، ولا يقيس صلاحية أرض حقيقية ولا يتنبأ بالإنتاج. درجات الماء والملوحة وعتبات «الدفء» داخل النشاط افتراضية، وليست حدوداً رقمية زراعية وردت في الكتاب.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section section-shell" id="lab-section" aria-labelledby="lab-title">
+      <div class="section-heading"><div><span class="section-kicker">05 / فكّر مثل المزارع</span><h2 id="lab-title">مختبر القرارات</h2><p>مواقف قصيرة تستند إلى العلاقات والمشكلات التي يعرضها الفصل.</p></div><div class="lab-score"><span>نقاط التعلّم</span><strong id="lab-score">٠</strong></div></div>
+      <div class="lab-layout"><div class="scenario-list" id="scenario-list"></div><div class="scenario-card" id="scenario-card" aria-live="polite"></div></div>
+    </section>
+
+    <section class="data-section" id="facts-section" aria-labelledby="facts-title">
+      <div class="section-shell">
+        <div class="section-heading"><div><span class="section-kicker">06 / اقرأ الرقم بسياقه</span><h2 id="facts-title">لقطات من تقديرات الكتاب</h2><p>الأرقام التالية تاريخية كما وردت في الفصل، وليست إحصاءات حالية.</p></div><span class="historical-stamp">بيانات تاريخية<br><strong>2018 — 2019</strong></span></div>
+        <div class="facts-grid" id="facts-grid"></div>
+        <p class="data-caveat"><span>!</span> تختلف المحاصيل والوحدات والسنوات؛ لا تستخدم هذه اللقطات للمقارنة الحالية أو لاستنتاج ترتيب لم يذكره الكتاب.</p>
+      </div>
+    </section>
+
+    <section class="content-section section-shell" id="livestock-section" aria-labelledby="livestock-title">
+      <div class="section-heading"><div><span class="section-kicker">07 / منظومة مترابطة</span><h2 id="livestock-title">من الحقل إلى الثروة الحيوانية</h2><p>الأعلاف والإنتاج الحيواني جزء من الصورة الزراعية التي يصفها الكتاب.</p></div></div>
+      <div class="livestock-grid">
+        <article class="livestock-card livestock-main"><span class="livestock-icon">🐑</span><div><span class="card-label">موارد يعددها الفصل</span><h3>الثروة الحيوانية</h3><p>الأغنام والماعز والأبقار والجاموس والجمال والدواجن، إضافةً إلى الأسماك والنحل.</p></div><div class="animal-benefits"><span>غذاء للسكان</span><span>مواد أولية للصناعة</span><span>دخل للمزارعين</span><span>سماد عضوي</span></div></article>
+        <article class="livestock-card"><span class="livestock-icon small">🌿</span><span class="card-label">محاصيل علف</span><h3>غذاء للحيوان</h3><p>يسمي الفصل الجت والبرسيم والتبن، ويذكر الاستفادة من سيقان الذرة وبذورها والسمسم والقصب.</p><a href="#crops-section" class="text-link">استكشف المحاصيل <span>↗</span></a></article>
+        <article class="livestock-card"><span class="livestock-icon small">⚠️</span><span class="card-label">تحديات يذكرها الفصل</span><h3>ما الذي يضغط على الإنتاج؟</h3><p>طرائق تقليدية، استثمار وإمكانات محدودة، ملوحة وتغدق، شحة مياه، وتحديات في الإنتاج الحيواني.</p><a href="#problems-section" class="text-link">اقرأ المشكلات <span>↓</span></a></article>
+      </div>
+    </section>
+
+    <section class="problems-section" id="problems-section" aria-labelledby="problems-title">
+      <div class="section-shell problems-layout"><div class="problems-intro"><span class="section-kicker">08 / الواقع والتحديات</span><h2 id="problems-title">العقبات كما وردت في الفصل</h2><p>هذه خلاصة دراسية لمشكلات القطاع، وليست تقييماً حديثاً للحالة الراهنة.</p></div><div class="problem-list" id="problem-list"></div></div>
+    </section>
+
+    <section class="content-section season-section" id="season-section" aria-labelledby="season-title">
+      <div class="section-shell">
+        <div class="section-heading"><div><span class="section-kicker">09 / إيقاع الزراعة</span><h2 id="season-title">مواسم يذكرها الكتاب</h2><p>عرض موسمي بلا تواريخ شهرية مخمّنة؛ فالكتاب يحدد نوع الموسم لبعض المحاصيل ولا يعطي تقويماً تفصيلياً لكل محافظة.</p></div></div>
+        <div class="season-board" id="season-board"></div>
+        <div class="journey-wrap"><div class="journey-heading"><div><span class="section-kicker">من البذرة إلى الحصاد</span><h3>رحلة المحصول</h3></div><span id="journey-progress">٠ من ٥</span></div><div class="journey-track" id="journey-track"></div><p class="supplement-note">خطوات الرحلة مادة إثرائية عامة للتعرّف على دورة الزراعة؛ لا تُنسب تفاصيلها إلى فصل الكتاب.</p></div>
+      </div>
+    </section>
+
+    <section class="quiz-section" id="learn-section" aria-labelledby="learn-title">
+      <div class="section-shell learn-header"><div><span class="section-kicker">10 / ثبّت ما تعلمته</span><h2 id="learn-title">تعلّم، جرّب، ثم اختبر</h2><p>أسئلة قصيرة من الفصل، مع تفسير للإجابة.</p></div><div class="quiz-total"><strong id="quiz-best">٠</strong><span>أفضل نتيجة</span></div></div>
+      <div class="section-shell learn-grid">
+        <div class="quiz-card" id="quiz-section"><div class="quiz-meta"><span id="quiz-counter">السؤال ١ من ٥</span><span class="quiz-source">من الكتاب</span></div><div class="quiz-progress-track"><span id="quiz-progress-fill"></span></div><h3 id="quiz-question"></h3><div class="quiz-options" id="quiz-options"></div><div class="quiz-feedback" id="quiz-feedback" aria-live="polite" hidden></div><div class="quiz-footer"><span id="quiz-score-live">نتيجتك: ٠</span><button class="button button-dark" id="quiz-next" type="button" disabled>السؤال التالي <span>←</span></button></div></div>
+        <aside class="glossary-card" id="glossary-section"><span class="section-kicker">قاموس صغير</span><h3>مصطلحات من الفصل</h3><label class="glossary-search"><span>⌕</span><input id="glossary-search" type="search" placeholder="ابحث عن مصطلح"></label><div class="glossary-list" id="glossary-list"></div></aside>
+      </div>
+      <div class="section-shell achievements-wrap"><div class="achievements-heading"><div><span class="section-kicker">تقدمك محفوظ على هذا الجهاز</span><h3>إنجازات الاستكشاف</h3></div><button class="text-button" id="reset-progress" type="button">إعادة ضبط التقدم</button></div><div class="achievement-list" id="achievement-list"></div></div>
+    </section>
+
+    <section class="sources-section" id="sources-section" aria-labelledby="sources-title">
+      <div class="section-shell sources-layout"><div><span class="section-kicker">11 / أمانة المصدر</span><h2 id="sources-title">المعلومة لها سند</h2><p>نميّز بين ما في الكتاب والبيانات الإضافية حتى تعرف من أين جاءت كل ملاحظة.</p></div><div class="source-cards">
+        <article class="source-card"><span class="source-number">A</span><div><h3>الكتاب المدرسي</h3><p>كتاب الاجتماعيات للصف الثالث المتوسط العراقي، فصل الزراعة، الصفحات المطبوعة 50–57. كل محتوى الموسوعة الدراسي مُلخص من هذا الفصل.</p><span class="source-badge">المرجع الدراسي</span></div></article>
+        <article class="source-card"><span class="source-number">B</span><div><h3>بيانات الحدود</h3><p>geoBoundaries، العراق ADM1، الإصدار الذي يمثل 2022، 18 وحدة، CC0 1.0. مصدر الهندسة: <a href="https://www.geoboundaries.org/api/current/gbOpen/IRQ/ADM1/" target="_blank" rel="noreferrer">بيانات API</a>. لا تمثل هذه النسخة حدود حلبجة المستحدثة لاحقاً.</p><span class="source-badge source-badge-muted">حدود تاريخية — تحتاج تحديثاً</span></div></article>
+        <article class="source-card"><span class="source-number">C</span><div><h3>تحديث إداري رسمي</h3><p>وزارة العدل العراقية أعلنت نشر المرسوم الجمهوري رقم 21 لسنة 2025 باستحداث محافظة حلبجة بوصفها المحافظة التاسعة عشرة. لم نرسم حدودها من دون ملف جغرافي محدث. <a href="https://www.moj.gov.iq/view.9251/" target="_blank" rel="noreferrer">بيان وزارة العدل ↗</a></p><span class="source-badge source-badge-muted">مرجع قانوني حديث</span></div></article>
+      </div></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="section-shell footer-inner"><a class="brand footer-brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M38 8C20 8 9 16 9 29c0 7 5 11 11 11 13 0 19-14 18-32Z"/><path d="M9 40c6-10 13-15 24-22"/></svg></span><span><strong>Iraq Agriculture Explorer</strong><small>المستكشف الزراعي للعراق</small></span></a><p>مساحة للتعلّم والاستكشاف — لا تنبؤات إنتاجية ولا أرقام بلا مصدر.</p><a href="#home" class="back-top">العودة للأعلى ↑</a></div><div class="section-shell footer-bottom"><span>مصمم للتعلّم · يعمل دون خادم خلفي</span><span>آخر مراجعة للمصادر: ٢٠ تشرين الثاني ٢٠٢٦</span></div></footer>
+
+  <dialog id="crop-dialog" class="crop-dialog" aria-labelledby="dialog-title"><div class="dialog-inner"><button class="dialog-close" id="dialog-close" type="button" aria-label="إغلاق">×</button><div id="dialog-content"></div></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
